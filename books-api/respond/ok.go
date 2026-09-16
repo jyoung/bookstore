@@ -9,6 +9,7 @@ import (
 
 // APIResponse is the interface to bridge APIData and APIDatum creating a single response object
 type APIResponse interface {
+	// Constrain this interface to these types
 	*APIData | *APIDatum
 	// SetRequestID sets the Request Id on the response object
 	SetRequestID(requestID string)

@@ -24,6 +24,6 @@ func GetAuthorByIDHandler(repo repository.AuthorRepository) http.HandlerFunc {
 			return
 		}
 
-		respond.OK(w, author)
+		respond.Ok(w, r, respond.Single(author))
 	}
 }

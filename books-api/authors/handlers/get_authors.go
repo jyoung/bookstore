@@ -15,6 +15,6 @@ func GetAuthorsHandler(repo repository.AuthorRepository) http.HandlerFunc {
 			return
 		}
 
-		respond.OK(w, authors)
+		respond.Ok(w, r, respond.List(authors, 1, 2, 1))
 	}
 }

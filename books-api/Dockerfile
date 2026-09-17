@@ -3,7 +3,7 @@ FROM golang:1.26-alpine AS build
 WORKDIR /app
 
 # Copy dependency manifests and download layers
-COPY go.mod go.sum ./
+COPY src/go.mod go.sum ./
 RUN go mod download
 
 # Copy the rest of the source

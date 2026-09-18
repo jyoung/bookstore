@@ -17,7 +17,7 @@ services:
   books-api:
     container_name: books-api
     build:
-      context: ./books-api
+      context: .
       dockerfile: Dockerfile
       target: prod
     ports:
@@ -29,7 +29,7 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
     env_file:
-      - ./books-api/.env
+      - .env
     depends_on:
       - db
 

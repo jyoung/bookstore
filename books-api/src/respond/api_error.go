@@ -15,6 +15,15 @@ type APIError struct {
 	RequestID string `json:"requestId"`
 }
 
+func BadRequest(message string) *APIError {
+	return &APIError{
+		Type:   "/bad-request",
+		Title:  "Bad Request",
+		Status: http.StatusBadRequest,
+		Detail: message,
+	}
+}
+
 func Unhandled(message string) *APIError {
 	return &APIError{
 		Type:   "/internal-server-error",

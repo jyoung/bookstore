@@ -15,6 +15,30 @@ services:
       - db_data:/var/lib/postgresql
     env_file:
       - .env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+
+  books-migration:
+    image: migrate/migrate:v4.18.2
+    container_name: books-migration
+    volumes:
+      - ./db:/migrations:ro,z
+    environment:
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        /migrate -path=/migrations/ -database "postgres://$${DB_USER}:$${DB_PASSWORD}@books-db:5432/$${DB_NAME}?sslmode=disable" up
+    depends_on:
+      books-db:
+        condition: service_healthy
+    restart: "no"
 
   books-api:
     container_name: books-api
@@ -33,7 +57,10 @@ services:
     env_file:
       - .env
     depends_on:
-      - books-db
+      books-db:
+        condition: service_healthy
+      books-migration:
+        condition: service_completed_successfully
 
 volumes:
   db_data:

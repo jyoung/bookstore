@@ -1,3 +1,5 @@
+name: bookstore
+
 services:
   books-db:
     image: postgres:alpine

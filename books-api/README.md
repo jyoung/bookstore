@@ -9,7 +9,7 @@ This repository contains the `books-api` Go service and a PostgreSQL database se
 - **Podman** and `podman compose` installed.
 - Ensure the environment configuration file exists. Copy the example file if needed:
   ```bash
-  cp books-api/.env.example books-api/.env
+  cp .env.example .env
   ```
   *(Make sure `DB_USER`, `DB_PASSWORD`, and `DB_NAME` match your desired local credentials).*
 
@@ -19,15 +19,15 @@ This repository contains the `books-api` Go service and a PostgreSQL database se
 
 ### Development Environment
 
-In development mode, Podman Compose automatically loads `compose.yaml` and `compose.override.yaml`. This builds the `dev` stage from `books-api/Dockerfile`, launching the application under the [Delve](https://github.com/go-delve/delve) debugger (`dlv`) on port `40000` alongside HTTP on port `8080`.
+In development mode, Podman Compose automatically loads `compose.yaml` and `compose.override.yaml`. This builds the `dev` stage from `Dockerfile`, launching the application under the [Delve](https://github.com/go-delve/delve) debugger (`dlv`) on port `40000` alongside HTTP on port `8080`.
 
 - **Start (build and run in foreground):**
   ```bash
-  podman compose --env-file ./books-api/.env up --build
+  podman compose --env-file .env up --build
   ```
 - **Start in background (detached mode):**
   ```bash
-  podman compose --env-file ./books-api/.env up --build -d
+  podman compose --env-file .env up --build -d
   ```
 
 ---
@@ -38,11 +38,11 @@ In production mode, specify `-f compose.yaml` to bypass `compose.override.yaml`.
 
 - **Start (build and run in foreground):**
   ```bash
-  podman compose -f compose.yaml --env-file ./books-api/.env up --build
+  podman compose -f compose.yaml --env-file .env up --build
   ```
 - **Start in background (detached mode):**
   ```bash
-  podman compose -f compose.yaml --env-file ./books-api/.env up --build -d
+  podman compose -f compose.yaml --env-file .env up --build -d
   ```
 
 ---
@@ -92,7 +92,7 @@ To connect and debug from GoLand:
 
 1. **Start the Development containers:**
    ```bash
-   podman compose --env-file ./books-api/.env up --build
+   podman compose --env-file .env up --build
    ```
 2. **Create a Run/Debug Configuration in GoLand:**
    - In the top menu, go to **Run** > **Edit Configurations...** (or click the configuration selector dropdown and choose *Edit Configurations*).
@@ -108,7 +108,7 @@ To connect and debug from GoLand:
    - Click the **Debug** icon (bug button) or press `Shift + F9`.
    - GoLand will connect to Delve inside the Podman container.
 4. **Set Breakpoints and Test:**
-   - Set a breakpoint in any handler or repository (e.g., in `src/main.go` or `books-api/src/authors/repository/repository.go`).
+   - Set a breakpoint in any handler or repository (e.g., in `src/main.go` or `src/authors/repository/repository.go`).
    - Trigger an HTTP request in your browser or terminal:
      ```bash
      curl http://localhost:8080/v1/authors

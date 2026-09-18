@@ -1,0 +1,6 @@
+services:
+  books-api:
+    build:
+      target: dev
+    ports:
+      - "40000:40000"

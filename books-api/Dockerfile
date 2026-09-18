@@ -1,25 +1,24 @@
-# --- Build Stage ---
-FROM golang:1.26-alpine AS build
+# Base Build
+FROM golang:1.26-alpine AS base
 WORKDIR /app
-
-# Copy dependency manifests and download layers
-COPY src/go.mod go.sum ./
+COPY src/go.mod src/go.sum ./
 RUN go mod download
+COPY ./src .
 
-# Copy the rest of the source
-COPY . .
+# Dev Build
+FROM base as dev
+RUN go install github.com/go-delve/delve/cmd/dlv@latest
+RUN CGO_ENABLED=0 go build -gcflags="all=-N -l" -o /app/books-api .
+EXPOSE 8080 40000
+CMD ["dlv", "--listen=:40000", "--headless=true", "--api-version=2", "--accept-multiclient", "exec", "./books-api"]
 
-# Build a statically linked binary
-RUN CGO_ENABLED=0 GOOS=linux go build -o /app/bin/books-api .
+# Production Build
+FROM base as builder
+RUN CGO_ENABLED=0 GOOS=linux go build -o /app/books-api .
 
-# --- Run Stage ---
-FROM alpine:latest
+# Final Production Build
+FROM alpine:latest as prod
 WORKDIR /app
-
-# Copy the binary from the build stage
-COPY --from=build /app/bin/books-api .
-
-# Expose the Go Chi server port
+COPY --from=builder /app/books-api .
 EXPOSE 8080
-
 CMD ["./books-api"]

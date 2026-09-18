@@ -1,10 +1,9 @@
 package handlers
 
 import (
+	"books-api/domain/authors/repository"
 	"books-api/respond"
 	"net/http"
-
-	"books-api/authors/repository"
 )
 
 func GetAuthorsHandler(repo repository.AuthorRepository) http.HandlerFunc {

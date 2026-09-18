@@ -1,7 +1,7 @@
 package server
 
 import (
-	"books-api/authors"
+	"books-api/domain/authors"
 	"database/sql"
 	"net/http"
 

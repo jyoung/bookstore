@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"books-api/authors/models"
+	"books-api/domain/authors/models"
 	"context"
 	"database/sql"
 	"errors"

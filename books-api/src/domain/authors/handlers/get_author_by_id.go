@@ -1,12 +1,11 @@
 package handlers
 
 import (
+	"books-api/domain/authors/repository"
 	"books-api/respond"
 	"fmt"
 	"net/http"
 	"strconv"
-
-	"books-api/authors/repository"
 
 	"github.com/go-chi/chi/v5"
 )

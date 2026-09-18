@@ -1,9 +1,10 @@
 package repository
 
 import (
-	"context"
-
 	"books-api/authors/models"
+	"context"
+	"database/sql"
+	"errors"
 )
 
 type AuthorRepository interface {
@@ -30,4 +31,20 @@ func (repo InMemoryRepository) GetByID(ctx context.Context, ID int32) ([]models.
 
 func NewInMemoryRepository() *InMemoryRepository {
 	return &InMemoryRepository{}
+}
+
+type PostgresRepository struct {
+	db *sql.DB
+}
+
+func (repo PostgresRepository) GetAll(ctx context.Context) ([]models.Author, error) {
+	return nil, errors.New("not implemented")
+}
+
+func (repo PostgresRepository) GetByID(ctx context.Context, ID int32) ([]models.Author, error) {
+	return nil, errors.New("not implemented")
+}
+
+func NewPostgresRepository(db *sql.DB) AuthorRepository {
+	return &PostgresRepository{db}
 }

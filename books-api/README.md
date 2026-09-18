@@ -108,7 +108,7 @@ To connect and debug from GoLand:
    - Click the **Debug** icon (bug button) or press `Shift + F9`.
    - GoLand will connect to Delve inside the Podman container.
 4. **Set Breakpoints and Test:**
-   - Set a breakpoint in any handler or repository (e.g., in `src/main.go` or `src/authors/repository/repository.go`).
+   - Set a breakpoint in any handler or repository (e.g., in `src/main.go` or `src/domain/authors`).
    - Trigger an HTTP request in your browser or terminal:
      ```bash
      curl http://localhost:8080/v1/authors
